@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <!-- Imagen a la izquierda del header -->
+    <ion-img src="assets/img/duoc-logo2.png" alt="Logo" slot="start" class="header-logo"></ion-img>
+
+
+    <!-- Título principal -->
+    <ion-title>Agregar producto
+      <ion-button (click)="dismissModal()" *ngIf="[IsModal]" >
+        <ion-icon name="close-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <form [formGroup]="form" class="auth-form" (ngSubmit)="submit()" (keypress.enter)="submit()">
+      <ion-input
+        autocomplete="nombre"
+        [formControl]="form.controls.nombre"
+        type="text"
+        label="Nombre"
+        labelPlacement="floating">
+     </ion-input>
+     <div class="validators" *ngIf="form.controls.nombre.errors && form.controls.nombre.touched">
+      <div *ngIf="form.controls.nombre.errors?.['required']">El nombre del producto es requerido</div>
+    </div>
+      <ion-input
+        [formControl]="form.controls.precio"
+        type="number"
+        label="Precio"
+        labelPlacement="floating">
+     </ion-input>
+     <div class="validators" *ngIf="form.controls.nombre.errors && form.controls.nombre.touched">
+      <div *ngIf="form.controls.nombre.errors?.['required']">El precio del producto es requerido</div>
+    </div>
+
+    <ion-button expand="block" fill="click" mode="ios" type="submit" [disabled]="form.invalid">Agregar Producto</ion-button>
+  </form>
+</ion-content>
+
