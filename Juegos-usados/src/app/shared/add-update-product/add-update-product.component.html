@@ -1,9 +1,8 @@
+<!-- add-update-product-html -->
 <ion-header>
   <ion-toolbar>
     <!-- Imagen a la izquierda del header -->
     <ion-img src="assets/img/duoc-logo2.png" alt="Logo" slot="start" class="header-logo"></ion-img>
-
-
     <!-- Título principal -->
     <ion-title>Agregar producto
       <ion-button (click)="dismissModal()" *ngIf="[IsModal]" >
@@ -14,6 +13,11 @@
 </ion-header>
 <ion-content>
   <form [formGroup]="form" class="auth-form" (ngSubmit)="submit()" (keypress.enter)="submit()">
+    <div *ngIf="form.value.imagen" class="image-preview">
+      <img [src]="form.value.imagen" alt="Vista previa de la imagen">
+    </div>
+    <ion-icon class="image-icon" *ngIf="!form.value.imagen" name="image-outline"></ion-icon>
+    <ion-button (click)="takePicture()" size="small" shape="round" >Seleccionar o tomar imagen</ion-button>
       <ion-input
         autocomplete="nombre"
         [formControl]="form.controls.nombre"
@@ -33,8 +37,6 @@
      <div class="validators" *ngIf="form.controls.nombre.errors && form.controls.nombre.touched">
       <div *ngIf="form.controls.nombre.errors?.['required']">El precio del producto es requerido</div>
     </div>
-
     <ion-button expand="block" fill="click" mode="ios" type="submit" [disabled]="form.invalid">Agregar Producto</ion-button>
   </form>
 </ion-content>
-

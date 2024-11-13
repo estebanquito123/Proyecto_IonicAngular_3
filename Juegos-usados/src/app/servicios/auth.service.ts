@@ -26,17 +26,20 @@ export class AuthService {
       const userCredential = await this.afAuth.signInWithEmailAndPassword(email, password);
       this.isAuthenticatedSubject.next(true);
 
-      // Obtenemos datos adicionales del usuario desde Firestore usando su UID
       const userDoc = await this.firestore.collection('usuarios').doc(userCredential.user.uid).get().toPromise();
       const usuarioData = userDoc.data() as Usuario;
-      this.usuarioCompletoSubject.next(usuarioData); // Almacena el objeto completo del usuario
+      this.usuarioCompletoSubject.next(usuarioData);
 
-      return usuarioData; // Retorna el usuario completo, incluido su rol
+      // Guardar el usuario en localStorage
+      localStorage.setItem('usuario', JSON.stringify(usuarioData));
+
+      return usuarioData;
     } catch (error) {
       this.isAuthenticatedSubject.next(false);
-      throw error; // Lanza el error para manejarlo en el componente
+      throw error;
     }
   }
+
 
 
 
