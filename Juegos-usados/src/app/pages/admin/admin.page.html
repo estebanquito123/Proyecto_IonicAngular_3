@@ -1,5 +1,29 @@
+<!--admin.page.html-->
 <app-header></app-header>
 <ion-content>
+  <ion-list>
+    <ion-item-sliding class="product-item" *ngFor="let p of productos">
+      <ion-item>
+        <div class="image-preview">
+          <img [src]="p.imagen">
+        </div>
+        <ion-label>
+          <div class="name">{{p.nombre}}</div>
+          <div class="data">
+            <strong>Precio: </strong> {{p.precio | currency: 'CLP'}}
+          </div>
+        </ion-label>
+        <ion-item-options side="end">
+          <ion-item-option (click)="addUpdateProduct(p)" color="primary">
+            <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+          </ion-item-option>
+          <ion-item-option (click)="deleteProduct(p.id)" color="danger">
+            <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item>
+    </ion-item-sliding>
+  </ion-list>
   <ion-fab vertical="buttom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="addUpdateProduct()">
       <ion-icon name="add"></ion-icon>

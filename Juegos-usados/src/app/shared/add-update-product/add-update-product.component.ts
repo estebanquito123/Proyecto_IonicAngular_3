@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Usuario } from 'src/app/models/bd.models';
 import { FirebaseService } from 'src/app/servicios/firebase.service';
 import { UtilsService } from 'src/app/servicios/utils.service';
+import { Producto } from 'src/app/models/bd.models';
 
 @Component({
   selector: 'app-add-update-product',
@@ -17,9 +18,10 @@ export class AddUpdateProductComponent  implements OnInit {
   @Input() label!: string;
   @Input() autocomplete!: string;
   @Input() icon!: string;
+  @Input() producto: Producto;
 
   form = new FormGroup({
-    uid: new FormControl(''),
+    id: new FormControl(''),
     imagen: new FormControl('', [Validators.required,]),
     nombre: new FormControl('', [Validators.required]),
     precio: new FormControl('', [Validators.required, Validators.min(0)])
@@ -35,7 +37,14 @@ export class AddUpdateProductComponent  implements OnInit {
   usuario= {} as Usuario;
 
   ngOnInit() {
-    this.usuario= this.utilsSvc.getFromLocalStorage('usuario');
+    // Si se proporciona un producto, inicializa el formulario con sus datos
+    if (this.producto) {
+      const productoData = {
+        ...this.producto,
+        precio: this.producto.precio.toString() // Convertir precio a string para el formulario
+      };
+      this.form.patchValue(productoData);
+    }
   }
 
 
@@ -43,26 +52,21 @@ async takePicture() {
   const dataUrl = (await this.utilsSvc.takePicture('Imagen del producto')).dataUrl;
   this.form.controls.imagen.setValue(dataUrl)
 }
-async submit() {
-  // Verificar si this.usuario y this.usuario.uid están definidos
-  if (!this.usuario || !this.usuario.uid) {
-    this.utilsSvc.presentToast({
-      message: 'No se pudo obtener la información del usuario. Por favor, inicie sesión de nuevo.',
-      duration: 2000,
-      color: 'danger',
-      position: 'middle',
-      icon: 'alert-circle-outline'
-    });
-    return; // Detener la ejecución si el usuario no está definido
+submit() {
+  if (this.producto && this.producto.id) {
+    this.actualizarProducto();
+  } else {
+    this.crearProducto();
   }
+}
 
+// Crear un nuevo producto en la colección global `productos`
+async crearProducto() {
   if (this.form.valid) {
-    const path = `usuarios/${this.usuario.uid}/productos`;
-
     const loading = await this.utilsSvc.loading();
     await loading.present();
 
-    this.firebaseSvc.addDocument(path, this.form.value).then(async res => {
+    this.firebaseSvc.addProducto(this.form.value).then(() => {
       this.utilsSvc.dismissModal({ success: true });
       this.utilsSvc.presentToast({
         message: 'Producto creado exitosamente',
@@ -86,4 +90,35 @@ async submit() {
   }
 }
 
+// Actualizar producto existente en la colección global `productos`
+async actualizarProducto() {
+  if (this.form.valid) {
+    const path = `productos/${this.producto.id}`; // Usar el id del producto
+
+    const loading = await this.utilsSvc.loading();
+    await loading.present();
+
+    this.firebaseSvc.updateProducto(this.producto.id, this.form.value).then(() => {
+      this.utilsSvc.dismissModal({ success: true });
+      this.utilsSvc.presentToast({
+        message: 'Producto actualizado exitosamente',
+        duration: 2000,
+        color: 'success',
+        position: 'middle',
+        icon: 'checkmark-circle-outline'
+      });
+    }).catch(error => {
+      console.log(error);
+      this.utilsSvc.presentToast({
+        message: error.message,
+        duration: 2000,
+        color: 'danger',
+        position: 'middle',
+        icon: 'alert-circle-outline'
+      });
+    }).finally(() => {
+      loading.dismiss();
+    });
+  }
+}
 }
