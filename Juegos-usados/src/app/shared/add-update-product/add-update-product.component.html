@@ -2,13 +2,9 @@
 <ion-header>
   <ion-toolbar>
     <!-- Imagen a la izquierda del header -->
-    <ion-img src="assets/img/duoc-logo2.png" alt="Logo" slot="start" class="header-logo"></ion-img>
+    <ion-img src="assets/img/mando-logo.png" alt="Logo" slot="start" class="header-logo"></ion-img>
     <!-- Título principal -->
-    <ion-title>Agregar producto
-      <ion-button (click)="dismissModal()" *ngIf="[IsModal]" >
-        <ion-icon name="close-circle-outline"></ion-icon>
-      </ion-button>
-    </ion-title>
+    <ion-title>Agregar producto</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>
@@ -38,5 +34,6 @@
       <div *ngIf="form.controls.nombre.errors?.['required']">El precio del producto es requerido</div>
     </div>
     <ion-button expand="block" fill="click" mode="ios" type="submit" [disabled]="form.invalid">Agregar Producto</ion-button>
+    <ion-button expand="block" color="danger" (click)="dismissModal()">Salir</ion-button>
   </form>
 </ion-content>

@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/servicios/auth.service';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { UtilsService } from 'src/app/servicios/utils.service';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +18,7 @@ export class LoginPage implements OnInit, OnDestroy {
   private alertController = inject(AlertController);
   private formBuilder = inject(FormBuilder);
   private router = inject(Router);
+  private utilsSvc= inject(UtilsService)
 
   private authSubscription: Subscription; // Suscripción para escuchar el estado de autenticación
 
@@ -39,23 +41,22 @@ export class LoginPage implements OnInit, OnDestroy {
   }
 
   async login() {
-    if (this.loginForm.invalid) {
-      return;
-    }
+    if (this.loginForm.invalid) return;
 
     const { email, password } = this.loginForm.value;
+    const loading = await this.utilsSvc.loading();  // Instancia de loading
+    await loading.present();
 
     try {
       const usuarioData = await this.authService.login(email, password);
       if (usuarioData) {
-        if (usuarioData.rol === 'administrador') {
-          this.router.navigate(['/admin']);
-        } else if (usuarioData.rol === 'cliente') {
-          this.router.navigate(['/cliente']);
-        }
+        const ruta = usuarioData.rol === 'administrador' ? '/admin' : '/cliente';
+        this.router.navigate([ruta]);
       }
     } catch (error) {
       this.mostrarAlerta('Error', error.message);
+    } finally {
+      loading.dismiss();
     }
   }
 

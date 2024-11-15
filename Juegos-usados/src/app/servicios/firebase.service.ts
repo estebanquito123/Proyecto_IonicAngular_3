@@ -21,15 +21,8 @@ export class FirebaseService {
     return this.auth.sendPasswordResetEmail(email); // Utiliza la instancia de AngularFireAuth
   }
 
-  signUp(user: Usuario) {
-    return createUserWithEmailAndPassword(getAuth(), user.email, user.password)
-  }
-
   updateUser(displayName: string) {
     return updateProfile(getAuth().currentUser, {displayName})
-  }
-  addDocument(path: string, data: any) {
-    return addDoc(collection(getFirestore(), path), data);
   }
 
   getProductos() {
@@ -57,8 +50,12 @@ export class FirebaseService {
     const docRef = doc(getFirestore(), path);
     return deleteDoc(docRef);
   }
-}
 
+  async guardarCompra(compra: any) {
+    const usuarioId = JSON.parse(localStorage.getItem('usuario')).uid; // Obtener el ID del usuario logueado
+    return this.firestore.collection(`usuarios/${usuarioId}/compras`).add(compra);
+}
+}
 
 
 

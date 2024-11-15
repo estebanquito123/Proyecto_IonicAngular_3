@@ -1,11 +1,11 @@
 /* Estilos del header existentes */
 ion-header {
-  background-color: #333; /* Color de fondo oscuro */
+  background-color: grey; /* Color de fondo oscuro */
   color: #ffcc00; /* Color de texto en amarillo */
 }
 
 ion-toolbar {
-  --background: #333; /* Color de fondo oscuro */
+  --background: grey; /* Color de fondo oscuro */
   --color: #ffcc00; /* Texto en color amarillo */
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Sombra para profundidad */
 }
@@ -122,10 +122,51 @@ ion-content {
     border: 1px solid #ccc;
   }
 
+  @media (max-width: 467px) {
+    ion-button[type='submit'] {
+      margin-right: 0;
+    }
+
+    ion-button {
+      margin-left: 0;
+      align-items: left;
+    }
+
+    ion-title {
+      margin-left: 0;
+    }
+
+    .auth-form {
+      margin-left: 0;
+    }
+  }
+
   .image-preview img {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
+
+  .auth-form {
+    width: 100%;
+    text-align: center;
+    padding: 20px;
+  }
+
+/* Posiciona el botón en la esquina superior derecha */
+/* Estilo del botón de cierre en el header */
+.close-button {
+  position: absolute; /* Posición absoluta para control total */
+  top: 10px; /* Ajuste según preferencia */
+  right: 10px; /* Ajuste según preferencia */
+  color: red !important; /* Forzamos el color rojo */
+  font-size: 1.5rem;
+}
+
+/* Color y tamaño específico del icono en el botón de cierre */
+.close-button ion-icon {
+  color: red !important; /* Forzamos el color rojo */
+  font-size: 1.8rem; /* Ajusta el tamaño del ícono */
+}
 
 }

@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ClientePageRoutingModule } from './cliente-routing.module';
+import { CompraPageRoutingModule } from './compra-routing.module';
 
-import { ClientePage } from './cliente.page';
+import { CompraPage } from './compra.page';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
@@ -14,9 +14,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    ClientePageRoutingModule,
+    CompraPageRoutingModule,
     SharedModule
   ],
-  declarations: [ClientePage]
+  declarations: [CompraPage]
 })
-export class ClientePageModule {}
+export class CompraPageModule {}

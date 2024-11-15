@@ -20,9 +20,6 @@ export class AdminPage implements OnInit {
 
   ngOnInit() {}
 
-  usuario(): Usuario {
-    return this.utilsSvc.getFromLocalStorage('usuario');
-  }
 
   ionViewWillEnter() {
     this.getProducts();

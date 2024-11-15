@@ -1,8 +1,10 @@
+import { UtilsService } from 'src/app/servicios/utils.service';
 //registrar.page.ts
 import { Component, inject, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/servicios/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registrar',
@@ -15,6 +17,8 @@ export class RegistrarPage implements OnInit {
   private authService = inject(AuthService);
   private alertController = inject(AlertController);
   private formBuilder = inject(FormBuilder);
+  private router = inject(Router);
+  private utilsSvc= inject(UtilsService);
 
   ngOnInit() {
     this.registroForm = this.formBuilder.group({
@@ -26,19 +30,23 @@ export class RegistrarPage implements OnInit {
   }
 
   async registrar() {
-    if (this.registroForm.invalid) {
-      return; // No intenta registrarse si el formulario es inválido
-    }
+    if (this.registroForm.invalid) return;
 
     const { email, password, nombreCompleto, rol } = this.registroForm.value;
+    const loading = await this.utilsSvc.loading();  // Instancia de loading
+    await loading.present();
 
     try {
       const resultado = await this.authService.registrarNuevoUsuario(nombreCompleto, email, password, rol);
       if (resultado) {
-        this.mostrarAlerta('Éxito', 'Usuario registrado exitosamente en Firebase Authentication y Firestore');
+        this.mostrarAlerta('Éxito', 'Usuario registrado exitosamente');
+        const ruta = rol === 'administrador' ? '/admin' : '/cliente';
+        this.router.navigate([ruta]);
       }
     } catch (error) {
       this.mostrarAlerta('Error', error.message);
+    } finally {
+      loading.dismiss();
     }
   }
 
