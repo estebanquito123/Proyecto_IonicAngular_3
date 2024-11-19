@@ -1,8 +1,15 @@
-
 /* Ajustes generales */
 ion-content {
   padding: 16px;
-  background-color: #f5f5f5;
+  background-color: hsl(48, 55%, 73%) !important; /* Color amarillo suave */
+}
+
+ion-button {
+  background-color: hsl(48, 55%, 73%) !important; /* Color amarillo suave */
+}
+
+ion-item {
+  background-color: hsl(48, 55%, 73%) !important; /* Color amarillo suave */
 }
 
 /* Contenedor de cada producto */
@@ -11,6 +18,7 @@ ion-content {
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   overflow: hidden;
+  background-color: hsl(48, 55%, 73%) !important; /* Color amarillo suave */
 }
 
 /* Estilo de los datos de producto */
@@ -18,6 +26,7 @@ ion-label {
   display: flex;
   flex-direction: column;
   margin-left: 16px;
+  background-color: hsl(48, 55%, 73%) !important; /* Color amarillo suave */
 }
 
 .name {
@@ -32,16 +41,6 @@ ion-label {
   color: #666;
 }
 
-/* Opciones de item (editar/eliminar) */
-ion-item-options {
-  background-color: #e9e9e9;
-  border-radius: 8px;
-}
-
-ion-item-option {
-  border-radius: 50%;
-  margin: 0 5px;
-}
 
 /* Estilo del botón flotante */
 ion-fab-button {
@@ -63,7 +62,6 @@ ion-fab-button:hover {
   justify-content: center;
   border-radius: 8px;
   border: 1px solid #ccc;
-  background-color: #f0f0f0;
 }
 
 .image-preview img {
@@ -71,4 +69,7 @@ ion-fab-button:hover {
   height: 100%;
   object-fit: cover;
 }
+
+
+
 

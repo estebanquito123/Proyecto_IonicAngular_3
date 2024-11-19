@@ -54,7 +54,7 @@ export class LoginPage implements OnInit, OnDestroy {
         this.router.navigate([ruta]);
       }
     } catch (error) {
-      this.mostrarAlerta('Error', error.message);
+      this.mostrarAlerta('Error', 'Correo o contraseña incorrectos');
     } finally {
       loading.dismiss();
     }

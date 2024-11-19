@@ -19,6 +19,7 @@ export class AddUpdateProductComponent  implements OnInit {
   @Input() autocomplete!: string;
   @Input() icon!: string;
   @Input() producto: Producto;
+  isEditMode = false;
 
   form = new FormGroup({
     id: new FormControl(''),
@@ -39,6 +40,7 @@ export class AddUpdateProductComponent  implements OnInit {
   ngOnInit() {
     // Si se proporciona un producto, inicializa el formulario con sus datos
     if (this.producto) {
+      this.isEditMode = true;
       const productoData = {
         ...this.producto,
         precio: this.producto.precio.toString() // Convertir precio a string para el formulario
@@ -53,7 +55,7 @@ async takePicture() {
   this.form.controls.imagen.setValue(dataUrl)
 }
 submit() {
-  if (this.producto && this.producto.id) {
+  if (this.producto && this.producto.id && this.isEditMode) {
     this.actualizarProducto();
   } else {
     this.crearProducto();

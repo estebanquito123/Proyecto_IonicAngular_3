@@ -48,3 +48,28 @@ body {
   font-size: 13px;
   text-align: center;
 }
+
+ion-content {
+  background-color: hsl(48, 55%, 73%) !important;
+}
+
+ion-content::part(scroll) {
+  background-color: hsl(48, 55%, 73%) !important; /* Aplica al scroll dentro del shadow DOM */
+}
+
+
+
+
+/* Cambiar el color de fondo y texto donde están los datos de los productos */
+.product-item ion-label {
+  background-color: hsl(48, 55%, 85%); /* Fondo amarillo suave */
+  color: #333; /* Color del texto */
+  padding: 8px; /* Espaciado interno para que se vea más estético */
+  border-radius: 4px; /* Bordes redondeados */
+  margin-top: 8px;
+}
+
+.product-item {
+  background-color: hsl(48, 55%, 85%); /* Fondo amarillo suave */
+}
+
