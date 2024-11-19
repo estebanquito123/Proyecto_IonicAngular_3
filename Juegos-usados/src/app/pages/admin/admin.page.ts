@@ -25,16 +25,26 @@ export class AdminPage implements OnInit {
     this.getProducts();
   }
 
-  getProducts() {
+  async getProducts() {
+    // Mostrar el loading spinner
+    const loading = await this.utilsSvc.loading();
+
     const sub = this.firebaseSvc.getProductos().subscribe({
       next: (res: Producto[]) => {
-        console.log(res)
+        console.log(res);
         this.productos = res;
         sub.unsubscribe();
       },
-      error: (error) => console.log('Error al obtener productos:', error)
+      error: (error) => {
+        console.log('Error al obtener productos:', error);
+      },
+      complete: () => {
+        // Ocultar el loading cuando se complete la carga
+        loading.dismiss();
+      }
     });
   }
+
 
   // Mostrar modal para agregar o actualizar producto
   addUpdateProduct(producto?: Producto) {
