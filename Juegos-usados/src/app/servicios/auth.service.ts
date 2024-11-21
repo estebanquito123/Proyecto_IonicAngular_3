@@ -39,10 +39,6 @@ export class AuthService {
       throw error;
     }
   }
-
-
-
-
   logout(): void {
     this.afAuth.signOut();
     this.isAuthenticatedSubject.next(false);

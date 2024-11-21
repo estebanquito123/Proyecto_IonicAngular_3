@@ -12,17 +12,8 @@ export class FirebaseService {
   private auth = inject(AngularFireAuth);
   private firestore= inject(AngularFirestore)
 
-  getCollectionData(path: string, collectionQuery?: any) {
-    const ref = collection(getFirestore(), path);
-    return collectionData(query(ref, collectionQuery), {idField: 'id'});
-  }
-
   sendRecoveryEmail(email: string) {
     return this.auth.sendPasswordResetEmail(email); // Utiliza la instancia de AngularFireAuth
-  }
-
-  updateUser(displayName: string) {
-    return updateProfile(getAuth().currentUser, {displayName})
   }
 
   getProductos() {
