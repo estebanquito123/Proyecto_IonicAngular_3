@@ -78,10 +78,4 @@ export class AuthService {
       }
     }
   }
-
-  enviarRecuperacionContrasena(email: string): void {
-    this.afAuth.sendPasswordResetEmail(email).then(() => {
-      console.log('Enlace de recuperación enviado a', email);
-    }).catch(error => console.error('Error al enviar enlace de recuperación:', error));
-  }
 }
